@@ -15,6 +15,10 @@
         overflow: hidden;
       }
 
+      [hidden] {
+        display: none !important;
+      }
+
       .el-container {
         background-color: var(--light-primary-color);
         color: white;
@@ -76,12 +80,14 @@
     <div class="layout vertical left el-container">
       <div class$="title {{_animatedBehavior(title, 'tall')}}">
         <div class$="{{_size}}">[[title]]</div>
-        <span class$="separator {{_size}}" hidden$="[[!title]]"></span>
+        <span class$="separator {{_size}}"
+            hidden$="[[!title]]"></span>
       </div>
       <div class$="message {{_animatedBehavior(message, 'short')}}"
           hidden$="[[!message]]">[[message]]</div>
       <a class$="group-button {{_animatedBehavior(message, 'tall')}}"
-          href="[[href]]" hidden$="[[!title]]">
+          href="[[href]]"
+          hidden$="[[!title]]">
                [[buttonLabel]]
                 <iron-icon icon="arrow-forward"
                     style="margin-left:10px;"></iron-icon>
