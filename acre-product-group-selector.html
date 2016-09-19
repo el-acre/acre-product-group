@@ -80,14 +80,12 @@
     <div class="layout vertical left el-container">
       <div class$="title {{_animatedBehavior(title, 'tall')}}">
         <div class$="{{_size}}">[[title]]</div>
-        <span class$="separator {{_size}}"
-            hidden$="[[!title]]"></span>
+        <span class$="separator {{_size}}" hidden$="[[!title]]"></span>
       </div>
-      <div class$="message {{_animatedBehavior(message, 'short')}}"
+      <div class$="message"
           hidden$="[[!message]]">[[message]]</div>
-      <a class$="group-button {{_animatedBehavior(message, 'tall')}}"
-          href="[[href]]"
-          hidden$="[[!title]]">
+      <a class="group-button" hidden$="[[!title]]"
+          href="[[href]]">
                [[buttonLabel]]
                 <iron-icon icon="arrow-forward"
                     style="margin-left:10px;"></iron-icon>
