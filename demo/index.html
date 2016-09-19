@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>acre-product-group demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import"
+        href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import"
+        href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import"
+        href="../acre-product-group.html">
+
+  </head>
+
+  <body>
+
+    <div class="">
+      <h3>Basic acre-product-group Demo</h3>
+      <demo-snippet class="centered-demo">
+        <template>
+          <style is="custom-style">
+             :root {
+              font-family: "Open Sans", sans-serif;
+              --dark-primary-color: #402572;
+              --default-primary-color: #4d2c88;
+              --light-primary-color: #6a44b0;
+              --dark-secondary-color: #d8374e;
+              --default-secondary-color: #ff3a56;
+              --accent-color: #fecb05;
+              --primary-background-color: #D1C4E9;
+              --primary-text-color: #212121;
+              --secondary-text-color: #9075c0;
+              --disabled-text-color: #BDBDBD;
+              --light-text-color: #fdfdfd;
+              --divider-color: #B6B6B6;
+              --big-font-size: 28px;
+              --medium-font-size: 18px;
+              --default-font-size: 15px;
+              --small-font-size: 13px;
+            }
+
+            acre-product-group {
+              --acre-product-group-selector: {
+                width: 376px;
+                height: 300px;
+                margin: 2px;
+              }
+              --acre-product-group-selector-tablet: {
+                max-width: 100%;
+                min-width: 180px;
+                width: 320px;
+              }
+              --acre-product-group-selector-mobile: {
+                width: 100%;
+              }
+              --acre-product-splited: {
+                background-color: white;
+                width: 376px;
+                height: 300px;
+                margin: 2px;
+              }
+              --acre-product-splited-large-h: {
+                width: 756px;
+              }
+              --acre-product-splited-tablet: {
+                max-width: 100%;
+                min-width: 180px;
+                width: 320px;
+              }
+              --acre-product-splited-mobile: {
+                width: 100%;
+              }
+              --acre-product-label-background-color: var(--default-secondary-color);
+              --acre-product-label-color: var(--light-text-color);
+              --acre-product-data-name: {
+                font-size: 13px;
+                line-height: 15px;
+                margin-bottom: 10px;
+                max-height: 90px;
+                overflow: hidden;
+              }
+            }
+          </style>
+          <acre-product-group src="https://www.shoppingmatriz.com.br/home/getCategoryItems/?categoryId=68" button-label="Ver todos os produtos"></acre-product-group>
+        </template>
+      </demo-snippet>
+    </div>
+
+  </body>
+
+</html>

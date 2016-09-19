@@ -1,0 +1,102 @@
+<link rel="import"
+    href="../polymer/polymer.html">
+<link rel="import"
+    href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import"
+    href="../acre-animated-background/acre-animated-background-behavior.html">
+<link rel="import"
+    href="../acre-animated-background/acre-animated-background-styles.html">
+
+<dom-module id="acre-product-group-selector">
+  <template>
+    <style include="acre-animated-background-styles">
+       :host {
+        display: block;
+        overflow: hidden;
+      }
+
+      .el-container {
+        background-color: var(--light-primary-color);
+        color: white;
+        padding: 30px;
+        height: 100%;
+      }
+
+      .title {
+        margin-bottom: 10px;
+        font-size: var(--big-font-size, 28px);
+        color: var(black, --acre-button-color);
+        font-weight: bold;
+        @apply(--acre-product-group-selector-title);
+      }
+
+      .separator {
+        border: 2px solid;
+        width: 100px;
+        border-color: var(black, --default-secondary-color);
+        margin-bottom: 15px;
+        display: block;
+        @apply(--acre-product-group-selector-separator);
+      }
+
+      .message {
+        font-size: var(--default-font-size, 15px);
+        margin-bottom: 10px;
+        @apply(--acre-product-group-selector-message);
+      }
+
+      .group-button {
+        text-decoration: none;
+        margin-top: 15px;
+        padding: 5px;
+        font-size: var(--medium-font-size, 18px);
+        font-weight: 600;
+        cursor: pointer;
+        background-color: var(--accent-color);
+        color: var(--dark-primary-color);
+        width: 260px;
+        height: 55px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--acre-product-group-selector-button);
+      }
+
+      .group-button:visited {
+        color: var(--dark-primary-color);
+      }
+
+      .acre-animated-background.tall {
+        width: 150px;
+      }
+
+      .acre-animated-background.short {
+        width: 100px;
+      }
+    </style>
+    <div class="layout vertical left el-container">
+      <div class$="title {{_animatedBehavior(title, 'tall')}}">
+        <div class$="{{_size}}">[[title]]</div>
+        <span class$="separator {{_size}}" hidden$="[[!title]]"></span>
+      </div>
+      <div class$="message {{_animatedBehavior(message, 'short')}}"
+          hidden$="[[!message]]">[[message]]</div>
+      <a class$="group-button {{_animatedBehavior(message, 'tall')}}"
+          href="[[href]]" hidden$="[[!title]]">
+               [[buttonLabel]]
+                <iron-icon icon="arrow-forward"
+                    style="margin-left:10px;"></iron-icon>
+            </a>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'acre-product-group-selector',
+
+      properties: {
+
+      },
+
+      behaviors: [AcreAnimatedBackgroundBehavior],
+    });
+  </script>
+</dom-module>

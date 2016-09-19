@@ -1,0 +1,259 @@
+<link rel="import"
+    href="../polymer/polymer.html">
+<link rel="import"
+    href="../iron-ajax/iron-ajax.html">
+<link rel="import"
+    href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import"
+    href="../iron-media-query/iron-media-query.html">
+<link rel="import"
+    href="../acre-product/acre-product-splited.html">
+<link rel="import"
+    href="acre-product-group-selector.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <acre-menu-bar></acre-menu-bar>
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--menu-item-hover-background-color` | The menu hover background color | `white`
+
+@demo demo/index.html
+@hero hero.svg
+-->
+
+<dom-module id="acre-product-group">
+  <template>
+    <style include="iron-flex iron-flex-alignment">
+       :host {
+        display: block;
+      }
+
+      .hidden {
+        display: none!important;
+      }
+
+      acre-product-group-selector {
+        @apply(--acre-product-group-selector);
+      }
+
+      acre-product-group-selector.tablet {
+        @apply(--acre-product-group-selector-tablet);
+      }
+
+      acre-product-group-selector.mobile {
+        @apply(--acre-product-group-selector-mobile);
+      }
+
+      acre-product-splited {
+        @apply(--acre-product-splited);
+      }
+
+      acre-product-splited.large-h {
+        @apply(--acre-product-splited);
+        @apply(--acre-product-splited-large-h);
+      }
+
+      acre-product-splited.tablet {
+        @apply(--acre-product-splited);
+        @apply(--acre-product-splited-tablet);
+      }
+
+      acre-product-splited.mobile {
+        @apply(--acre-product-splited);
+        @apply(--acre-product-splited-mobile);
+      }
+    </style>
+
+    <iron-media-query query="max-width: 1024px"
+        query-matches="{{mediumScreen}}"></iron-media-query>
+
+    <iron-media-query query="max-width: 767px"
+        query-matches="{{smallScreen}}"></iron-media-query>
+
+    <iron-ajax id="getProductsRequest"
+        handle-as="json"
+        last-response="{{data}}"
+        url="[[src]]"
+        on-response="_getProductsReponse"></iron-ajax>
+
+    <div class="layout horizontal left-justified wrap">
+      <acre-product-group-selector class$="{{itemSize}}"
+          title="[[data.categoryName]]"
+          message="[[data.message]]"
+          href="[[data.categoryHref]]"
+          button-label="[[buttonLabel]]">
+      </acre-product-group-selector>
+      <template is="dom-repeat"
+          items="{{data.items}}"
+          index-as="index">
+        <acre-product-splited label="Pronta Entrega"
+            class$="{{itemSize}} {{_isLargeItem(index)}}"
+            product="[[item.product]]"
+            name-href="[[item.nameHref]]"
+            category-href="[[item.categoryHref]]"
+            image-href="[[item.imageHref]]">
+        </acre-product-splited>
+      </template>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'acre-product-group',
+
+      properties: {
+        src: String,
+        data: {
+          type: Array,
+          value: function() {
+            return {
+              message: null,
+              categoryName: null,
+              categoryHref: null,
+              items: [{
+                nameHref: '',
+                categoryHref: '',
+                imageHref: '',
+                product: {
+                  name: "",
+                  category: "",
+                  instalments: null,
+                  instalmentValue: null,
+                  image: "null",
+                  price: null
+                }
+              }, {
+                nameHref: '',
+                categoryHref: '',
+                imageHref: '',
+                product: {
+                  name: "",
+                  category: "",
+                  instalments: null,
+                  instalmentValue: null,
+                  image: "null",
+                  price: null
+                }
+              }, {
+                nameHref: '',
+                categoryHref: '',
+                imageHref: '',
+                product: {
+                  name: "",
+                  category: "",
+                  instalments: null,
+                  instalmentValue: null,
+                  image: "null",
+                  price: null
+                }
+              }, {
+                nameHref: '',
+                categoryHref: '',
+                imageHref: '',
+                product: {
+                  name: "",
+                  category: "",
+                  instalments: null,
+                  instalmentValue: null,
+                  image: "null",
+                  price: null
+                }
+              }]
+            }
+          }
+        },
+        isOnScreen: Boolean,
+        _interval: Object,
+
+      },
+
+      // observe username and password property changes ...
+      observers: [
+        '_visibilityChanged(isOnScreen)',
+        '_computeItemSize(smallScreen, mediumScreen)'
+      ],
+
+      _visibilityChanged: function(isOnScreen) {
+        clearInterval(this._interval);
+        this.$.getProductsRequest.generateRequest();
+      },
+
+      /*
+       * Computed properties
+       */
+      _computeItemSize: function(smallScreen, mediumScreen) {
+
+        if (smallScreen) this.set('itemSize', 'mobile');
+        else if (mediumScreen) this.set('itemSize', 'tablet');
+      },
+
+      _isLargeItem: function(e) {
+        if (e ===0 && (this.smallScreen || this.mediumScreen)) return 'hidden';
+        if (e === 0) return 'large-h';
+      },
+
+      // Element Lifecycle
+
+        ready: function() {
+        // `ready` is called after all elements have been configured, but
+        // propagates bottom-up. This element's children are ready, but parents
+        // are not.
+        //
+        // This is the point where you should make modifications to the DOM (when
+        // necessary), or kick off any processes the element wants to perform.
+      },
+
+      attached: function() {
+        // `attached` fires once the element and its parents have been inserted
+        // into a document.
+        //
+        // This is a good place to perform any work related to your element's
+        // visual state or active behavior (measuring sizes, beginning animations,
+        // loading resources, etc).
+
+        /* Am I visible?
+         * Height and Width are not explicitly necessary in visibility detection, the bottom, right, top and left are the
+         * essential checks. If an image is 0x0, it is technically not visible, so it should not be marked as such.
+         *
+         *That is why either width or height have to be > 0.
+         */
+        var _this = this;
+        this._interval = setInterval(function() {
+          var rect = _this.getBoundingClientRect();
+
+          var res = (
+            (rect.height > 0 || rect.width > 0) &&
+            rect.bottom >= 0 &&
+            rect.right >= 0 &&
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.left <= (window.innerWidth || document.documentElement.clientWidth)
+          );
+
+          if (res) {
+            _this.set('isOnScreen', res);
+          }
+        }, 250);
+      },
+
+      detached: function() {
+        // The analog to `attached`, `detached` fires when the element has been
+        // removed from a document.
+        //
+        // Use this to clean up anything you did in `attached`.
+      },
+
+      _getProductsReponse: function(e) {
+        if (!this.data) return;
+        this.fire('qc-product-impressions', {
+          products: this.data.items,
+          origin: "carrousel " + this.data.categoryName
+        });
+      }
+
+    });
+  </script>
+</dom-module>

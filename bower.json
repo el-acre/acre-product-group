@@ -1,0 +1,16 @@
+{
+  "name": "acre-product-group",
+  "main": "acre-product-group.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "iron-media-query": "PolymerElements/iron-media-query#^1.0.8",
+    "acre-animated-background": "https://github.com/el-acre/acre-animated-background.git",
+    "acre-product": "https://github.com/el-acre/acre-product.git"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  }
+}
