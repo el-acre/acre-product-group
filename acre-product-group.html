@@ -62,7 +62,7 @@ Custom property | Description | Default
     <iron-media-query query="max-width: 1200px"
         query-matches="{{mediumScreen}}"></iron-media-query>
 
-    <iron-media-query query="max-width: 790px"
+    <iron-media-query query="max-width: 760px"
         query-matches="{{smallScreen}}"></iron-media-query>
 
     <iron-ajax id="getProductsRequest"
@@ -72,7 +72,7 @@ Custom property | Description | Default
         on-response="_getProductsReponse"></iron-ajax>
 
     <div class="layout horizontal wrap">
-      <acre-product-group-selector class$="{{_itemSize}}"
+      <acre-product-group-selector class$="layout flex {{_itemSize}}"
           title="[[data.categoryName]]"
           message="[[data.message]]"
           href="[[data.categoryHref]]"
