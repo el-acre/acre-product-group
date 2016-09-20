@@ -1,15 +1,9 @@
-<link rel="import"
-    href="../polymer/polymer.html">
-<link rel="import"
-    href="../iron-ajax/iron-ajax.html">
-<link rel="import"
-    href="../iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import"
-    href="../iron-media-query/iron-media-query.html">
-<link rel="import"
-    href="../acre-product/acre-product-splited.html">
-<link rel="import"
-    href="acre-product-group-selector.html">
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../iron-media-query/iron-media-query.html">
+<link rel="import" href="../acre-product/acre-product-splited.html">
+<link rel="import" href="acre-product-group-selector.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -53,11 +47,6 @@ Custom property | Description | Default
         @apply(--acre-product-splited);
       }
 
-      acre-product-splited.large-h {
-        @apply(--acre-product-splited);
-        @apply(--acre-product-splited-large-h);
-      }
-
       acre-product-splited.tablet {
         @apply(--acre-product-splited);
         @apply(--acre-product-splited-tablet);
@@ -67,12 +56,13 @@ Custom property | Description | Default
         @apply(--acre-product-splited);
         @apply(--acre-product-splited-mobile);
       }
+
     </style>
 
-    <iron-media-query query="max-width: 1024px"
+    <iron-media-query query="max-width: 1200px"
         query-matches="{{mediumScreen}}"></iron-media-query>
 
-    <iron-media-query query="max-width: 767px"
+    <iron-media-query query="max-width: 790px"
         query-matches="{{smallScreen}}"></iron-media-query>
 
     <iron-ajax id="getProductsRequest"
@@ -81,8 +71,8 @@ Custom property | Description | Default
         url="[[src]]"
         on-response="_getProductsReponse"></iron-ajax>
 
-    <div class="layout horizontal center-justified wrap">
-      <acre-product-group-selector class$="{{itemSize}}"
+    <div class="layout horizontal wrap">
+      <acre-product-group-selector class$="{{_itemSize}}"
           title="[[data.categoryName]]"
           message="[[data.message]]"
           href="[[data.categoryHref]]"
@@ -92,14 +82,14 @@ Custom property | Description | Default
           items="{{data.items}}"
           index-as="index">
         <acre-product-splited label="Pronta Entrega"
-            class$="{{itemSize}} {{_isLargeItem(index)}}"
+            class$="layout flex {{_itemSize}}"
             product="[[item.product]]"
             name-href="[[item.nameHref]]"
             category-href="[[item.categoryHref]]"
             image-href="[[item.imageHref]]">
         </acre-product-splited>
       </template>
-    </div>
+  </div>
   </template>
   <script>
     Polymer({
@@ -167,6 +157,10 @@ Custom property | Description | Default
           }
         },
         isOnScreen: Boolean,
+        _itemSize: {
+          type: String,
+          notify: true,
+        },
         _interval: Object,
 
       },
@@ -187,18 +181,14 @@ Custom property | Description | Default
        */
       _computeItemSize: function(smallScreen, mediumScreen) {
 
-        if (smallScreen) this.set('itemSize', 'mobile');
-        else if (mediumScreen) this.set('itemSize', 'tablet');
-      },
-
-      _isLargeItem: function(e) {
-        if (e ===0 && (this.smallScreen || this.mediumScreen)) return 'hidden';
-        if (e === 0) return 'large-h';
+        if (smallScreen) this.set('_itemSize', 'mobile');
+        else if (mediumScreen) this.set('_itemSize', 'tablet');
+        else this.set('_itemSize', '');
       },
 
       // Element Lifecycle
 
-        ready: function() {
+      ready: function() {
         // `ready` is called after all elements have been configured, but
         // propagates bottom-up. This element's children are ready, but parents
         // are not.
