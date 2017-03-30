@@ -86,6 +86,7 @@ Custom property | Description | Default
             product="[[item.product]]"
             name-href="[[item.nameHref]]"
             category-href="[[item.categoryHref]]"
+            on-acre-product-click="_productClicked"
             image-href="[[item.imageHref]]">
         </acre-product-splited>
       </template>
@@ -240,8 +241,16 @@ Custom property | Description | Default
         if (!this.data) return;
         this.fire('qc-product-impressions', {
           products: this.data.items,
-          origin: "carrousel " + this.data.categoryName
+          origin: "product group " + this.data.categoryName
         });
+      },
+
+      _productClicked: function (e) {
+        this.fire('qc-product-group-click', {
+          product: e.detail.product,
+          origin: "product group " + this.data.categoryName
+        });
+        e.preventDefault();
       }
 
     });
