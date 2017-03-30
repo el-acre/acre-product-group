@@ -86,6 +86,7 @@ Custom property | Description | Default
             product="[[item.product]]"
             name-href="[[item.nameHref]]"
             category-href="[[item.categoryHref]]"
+            on-acre-product-click="_productClicked"
             image-href="[[item.imageHref]]">
         </acre-product-splited>
       </template>
@@ -194,7 +195,7 @@ Custom property | Description | Default
         // are not.
         //
         // This is the point where you should make modifications to the DOM (when
-        // necessary), or kick off any processes the element wants to perform.
+          // necessary), or kick off any processes the element wants to perform.
       },
 
       attached: function() {
@@ -240,8 +241,16 @@ Custom property | Description | Default
         if (!this.data) return;
         this.fire('qc-product-impressions', {
           products: this.data.items,
-          origin: "carrousel " + this.data.categoryName
+          origin: "Grupo Produtos " + this.data.categoryName
         });
+      },
+
+      _productClicked: function (e) {
+        this.fire('qc-product-group-click', {
+          product: e.detail.product,
+          origin: "Grupo Produtos " + this.data.categoryName
+        });
+        e.preventDefault();
       }
 
     });
